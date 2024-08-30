@@ -5,8 +5,8 @@ const Feedback = ({ rate, totalFeedback, percentRate }) => {
         <p>Good: {rate.good}</p>
         <p>Neutral: {rate.neutral}</p>
         <p>Bad: {rate.bad}</p>
-        <p>Total: {totalFeedback}</p>
-        <p>Positive: {percentRate}% </p>
+        <p style={{ color: "#9aa7e3" }}>Total: {totalFeedback}</p>
+        <p style={{ fontWeight: "bold" }}>Positive: {percentRate}% </p>
       </>
     );
 };
