@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import Description from "./components/Description";
 import Feedback from "./components/Feedback";
@@ -12,7 +12,15 @@ const initialValue = {
 };
 
 function App() {
-  const [rate, setRate] = useState(initialValue);
+  const [rate, setRate] = useState(() => {
+    const savedRates = localStorage.getItem("Feedback rates");
+    if (savedRates !== null) {
+      return JSON.parse(savedRates);
+    } else {
+      return initialValue;
+    }
+  });
+
   const updateFeedback = (x) => {
     setRate({ ...rate, [x]: rate[x] + 1 });
   };
@@ -22,7 +30,21 @@ function App() {
     ((rate.good + rate.neutral) / totalFeedback) * 100
   );
 
-  const resetRate = () => setRate(initialValue);
+  const resetRate = () => {
+    setRate(initialValue);
+    localStorage.clear();
+  };
+
+  useEffect(() => {
+    localStorage.setItem("Feedback rates", JSON.stringify(rate));
+  }, [rate]);
+
+  // useEffect(() => {
+  //   const savedRates = localStorage.getItem("Feedback rates");
+  //   if (savedRates !== null) {
+  //     setRate(JSON.parse(savedRates));
+  //   }
+  // }, []);
 
   return (
     <>
